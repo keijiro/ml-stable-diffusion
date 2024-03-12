@@ -349,10 +349,17 @@ public final class PNDMScheduler: Scheduler {
 ///   - start: Start of the interval
 ///   - end: End of the interval
 ///   - count: The number of floats to return between [*start*, *end*]
+///   - endpoint: If true, `end` is the last sample. Otherwise, it is not included. Default is true
 /// - Returns: Float array with *count* elements evenly spaced between at *start* and *end*
-func linspace(_ start: Float, _ end: Float, _ count: Int) -> [Float] {
-    let scale = (end - start) / Float(count - 1)
-    return (0..<count).map { Float($0)*scale + start }
+func linspace(_ start: Float, _ end: Float, _ count: Int, endpoint: Bool = true) -> [Float] {
+    guard count > 1 else { return [start] }
+    let div = endpoint ? Float(count - 1) : Float(count)
+    let scale = (end - start) / div
+    var y = (0..<count).map { Float($0) * scale + start }
+    if endpoint {
+        y[count - 1] = end
+    }
+    return y
 }
 
 extension Collection {

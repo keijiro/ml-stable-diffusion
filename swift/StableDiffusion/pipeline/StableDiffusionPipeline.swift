@@ -13,6 +13,9 @@ public enum StableDiffusionScheduler {
     case pndmScheduler
     /// Scheduler that uses a second order DPM-Solver++ algorithm
     case dpmSolverMultistepScheduler
+    /// Latent consistency model multistep scheduler
+    case lcmScheduler
+
 }
 
 /// RNG compatible with StableDiffusionPipeline
@@ -229,6 +232,7 @@ public struct StableDiffusionPipeline: StableDiffusionPipelineProtocol {
             switch config.schedulerType {
             case .pndmScheduler: return PNDMScheduler(stepCount: config.stepCount)
             case .dpmSolverMultistepScheduler: return DPMSolverMultistepScheduler(stepCount: config.stepCount, timeStepSpacing: config.schedulerTimestepSpacing)
+            case .lcmScheduler: return LCMScheduler(stepCount: config.stepCount, originalStepCount: config.stepCount, randomSource: randomSource(from: config.rngType, seed: config.seed))
             }
         }
 
