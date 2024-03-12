@@ -8,7 +8,7 @@ import Foundation
 import NaturalLanguage
 
 /// Schedulers compatible with StableDiffusionPipeline
-public enum StableDiffusionScheduler {
+public enum StableDiffusionScheduler: Int {
     /// Scheduler that uses a pseudo-linear multi-step (PLMS) method
     case pndmScheduler
     /// Scheduler that uses a second order DPM-Solver++ algorithm
